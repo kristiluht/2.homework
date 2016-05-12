@@ -21,27 +21,7 @@
 		//3 password
 		//4 database
 		
-		$mysql = new mysqli("localhost", $db_username, $db_password, "webpr2016_kriluh");
-	
-		$stmt = $mysql->prepare("INSERT INTO messages_sample (id, time, name, comment, mood, created)VALUES (?, ?, ?, ?, ?, ?)");
 		
-		//We are replacing question marks with values
-		//s - string, date or smth that is based on characters and numbers
-		//i - integer, number
-		//d - decimal, float
-		
-		//for each question mark its type with one letter
-		$stmt->bind_param("ssssss", $_GET["id"], $_GET["time"], $_GET["name"], $_GET["comment"], $_GET["mood"], $_GET["created"]);
-		
-		//echo error
-		echo $mysql->error;
-		
-		//save
-		if ($stmt->execute()){
-			echo "saved successfully";
-		}else{
-			echo $stmt->error;
-		}
 	
 	//*****************
 	//TO validation
@@ -111,7 +91,27 @@
 	//$to = $_GET ["to"];
 	//$urgency = $_GET ["urgency"];
 	//echo "My message is " .$my_message. " and it is to " .$to;
+	$mysql = new mysqli("localhost", $db_username, $db_password, "webpr2016_kriluh");
 	
+		$stmt = $mysql->prepare("INSERT INTO messages_sample (time, name, comment, mood)VALUES (?, ?, ?, ?)");
+		
+		//We are replacing question marks with values
+		//s - string, date or smth that is based on characters and numbers
+		//i - integer, number
+		//d - decimal, float
+		
+		//for each question mark its type with one letter
+		$stmt->bind_param("ssss", $_GET["day"], $_GET["name"], $_GET["comment"], $_GET["mood"]);
+		
+		//echo error
+		echo $mysql->error;
+		
+		//save
+		if ($stmt->execute()){
+			echo "saved successfully";
+		}else{
+			echo $stmt->error;
+		}
 	
 
 
